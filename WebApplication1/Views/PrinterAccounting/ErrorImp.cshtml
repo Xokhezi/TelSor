@@ -1,0 +1,11 @@
+﻿
+@{
+    ViewBag.Title = "ErrorImp";
+    Layout = "~/Views/Shared/_Layout - printer.cshtml";
+}
+
+<h2>Chyba importu</h2>
+<p>Pro vybraný měsíc nebyly k dispozici data.</p>
+<p>Opakujte kalkulaci, v případě opětovné chyby, kontaktujte IT.</p>
+@Html.ActionLink("Zpět na účtování", "Index", "PrinterAccounting", null, new { @class = "btn btn-primary" })
+

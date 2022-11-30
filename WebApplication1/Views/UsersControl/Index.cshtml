@@ -1,0 +1,72 @@
+﻿@model WebApplication1.Models.UsersControlViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Role a uživatelé</h2>
+
+<table id="roles" class="table table-bordered table-hover" width="100%">
+    <thead>
+        <tr>
+            <th>Uživatel</th>
+            <th>Role</th>
+            <th>Oddělení</th>
+            <th></th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var u in Model.ManagersMasterDatas)
+        {
+            <tr>
+                <td><a href='/telsor/UsersControl/AsignDepartment/@u.Id'>@u.Name</a></td>
+                <td>@u.Role</td>
+                <td>@u.Department</td>
+                <td><a class="btn btn-default" href='/telsor/UsersControl/Delete/@u.Id'>Smazat</a></td>
+
+            </tr>
+        }
+
+
+
+
+
+
+    </tbody>
+</table>
+<ul>
+    <li>1 = Jednatel</li>
+    <li>2 = Manažer</li>
+    <li>4 = ISS a vránice</li>
+    <li>5 = Lidské zdroje</li>
+    <li>6 = Finance</li>
+    <li>7 = Logistika</li>
+    <li>8 = Zásobování a sklady</li>
+    <li>9 = Výroba</li>
+    <li>10 = Technologie</li>
+    <li>11 = Nástrojárna</li>
+    <li>12 = Kvalita</li>
+    <li>13 = Servis</li>
+    <li>14 = Neurčeno</li>
+</ul>
+
+@section scripts{
+    <script>
+        $("#roles").DataTable();
+    </script>
+    <script>
+        var timer;
+
+        function loading() {
+            timer = setTimeout(showPage, 750);
+        }
+
+        function showPage() {
+            document.getElementById("loader").style.display = "none";
+            document.getElementById("div").style.display = "inline";
+        }
+    </script>
+}

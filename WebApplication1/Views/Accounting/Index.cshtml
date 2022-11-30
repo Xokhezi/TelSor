@@ -1,0 +1,157 @@
+﻿@model WebApplication1.Models.AccountingViewModel
+@{
+    ViewBag.Title = "Accounting";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+<body onload="loading()" style="margin:0;">
+    <div id="loader"></div>
+    <div style="display:none;" id="div" class="animate-bottom">
+        <h2>Účtování telefonů</h2>
+
+        <table id="deps" class="table table-bordered table-hover" width="100%">
+            <thead>
+                <tr>
+                    <th>Cena bez Dph</th>
+                    <th>Cena s Dph</th>
+                    <th>Středisko</th>
+                    <th>Číslo střediska</th>
+                    <th>Datum</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var r in Model.Records)
+                {
+                    <tr>
+                        <td>@r.Price</td>
+                        <td>@r.PriceWithDph</td>
+                        <td>@r.Department.Name</td>
+                        <td>@r.Department.DepNumber</td>
+                        <td>@r.DateOf.ToShortDateString()</td>
+                    </tr>
+                }
+
+
+
+
+
+            </tbody>
+        </table>
+        @{if (Model.Records.Count != 0)
+            {
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Číslo faktury</th>
+                            <th>Celková cena</th>
+                            <th>Celková cena s Dph</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.Records[0].InvoiceNumber</td>
+                            <td>@Model.TotalPrice</td>
+                            <td>@Model.TotalPriceWithDph</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            }
+        }
+
+        <hr />
+        @{if (Model.Records.Count != 0)
+            {
+                <h2>Účtování</h2>
+                <p>Vymaže data z tabulky za zadaný měsíc.</p>
+                using (Html.BeginForm("Posting", "Accounting"))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(r => r.Month)
+                        @Html.TextBoxFor(r => r.Month, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(r => r.Month)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(r => r.Year)
+                        @Html.TextBoxFor(r => r.Year, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(r => r.Year)
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Zaúčtovat</button>
+                }
+
+            }
+
+            else
+            {
+                <h2>Kalkulace</h2>
+                <p>Načte do tabulky data pro zadaný měsíc.</p>
+
+
+
+                using (Html.BeginForm("DoCalculation", "Accounting"))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(r => r.Month)
+                        @Html.TextBoxFor(r => r.Month, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(r => r.Month)
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(r => r.Year)
+                        @Html.TextBoxFor(r => r.Year, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(r => r.Year)
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Kalkulace</button>
+                }
+            }
+            <p></p>
+            <h4>K zaúčtování data pro:</h4>
+
+            foreach (var m in Model.NotCalculatedMonths)
+            {
+                <p>@m .měsíc</p>
+            }
+        }
+
+
+
+    </div>
+    @section scripts{
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#deps').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [                        
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5'
+                    ]
+                });
+            });
+        </script>
+        <script>
+            var timer;
+
+            function loading() {
+                timer = setTimeout(showPage, 750);
+            }
+
+            function showPage() {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("div").style.display = "inline";
+            }
+        </script>
+    }
+</body>

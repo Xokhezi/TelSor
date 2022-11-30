@@ -1,0 +1,28 @@
+﻿@model WebApplication1.Models.NewMasterDataViewModel
+@{
+    ViewBag.Title = "Nový záznam";
+}
+
+<h2>Nový záznam</h2>
+@using (Html.BeginForm("Save", "MasterData"))
+{
+    <div class="form-group">
+        @Html.LabelFor(r => r.NumberMasterData.Number)
+        @Html.TextBoxFor(r => r.NumberMasterData.Number, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.NumberMasterData.Number)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.NumberMasterData.Name)
+        @Html.TextBoxFor(r => r.NumberMasterData.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.NumberMasterData.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.NumberMasterData.DepartmentId)
+        @Html.DropDownListFor(r => r.NumberMasterData.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Oddělení", new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.NumberMasterData.DepartmentId)
+    </div>
+
+    @Html.HiddenFor(r => r.NumberMasterData.Id)
+
+    <button type="submit" class="btn btn-primary">Uložit</button>
+}

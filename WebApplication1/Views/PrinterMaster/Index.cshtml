@@ -1,0 +1,43 @@
+﻿@model WebApplication1.Models.PrinterMasterViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout - printer.cshtml";
+}
+
+<h2>Kmenová data tiskárny</h2>
+<table id="masterData" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Sériové Číslo</th>
+            <th>Název</th>
+            <th>Odpovědný člověk</th>
+            <th>Závod</th>
+            <th>Oddělení</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.PrinterMasters)
+        {
+            <tr>
+                <td><a href='/telsor/PrinterMaster/detail/@r.Id'>@r.SerialNr</a></td>
+                <td>@r.Name</td>
+                <td>@r.ResponsiblePerson</td>
+                <td>@r.Factory</td>
+                <td>@r.Department.Name</td>
+                <td><a class="btn btn-default" href='/telsor/printermaster/DeleteMasterData/@r.Id'>Smazat</a></td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+@Html.ActionLink("Nový záznam", "New", "PrinterMaster", null, new { @class = "btn btn-primary" })
+
+@section scripts{
+    <script>
+        $("#masterData").DataTable();
+    </script>
+}
+

@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "ImportFailed";
+}
+
+<h2>Něco se nepovedlo</h2>
+
+<p>Během imporut došlok chybě. Zkontrolujte zda:</p>
+<p>- je vytvořen soubor \\sw02660.global.hvwan.net\PrivDoc$\IT\Import\import.csv</p>
+<p>- je soubor ve formátu CSV UTF-8 (s oddělovači) (*.csv)</p>
+<p>(Zkontrolutje zda do složky máte přístup přes průzkumník souborů).</p>
+<p></p>
+<p>Pokud je vše v pořádku import opakujte, případně kontatujte IT.</p>
+@Html.ActionLink("Zpět na Import", "Index", "Records", null, new { @class = "btn btn-primary" })
+

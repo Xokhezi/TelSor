@@ -1,0 +1,115 @@
+﻿@model WebApplication1.Models.ImportPrinterViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout - printer.cshtml";
+}
+
+<h2>Import</h2>
+
+<p>Před importem je nutno stáhnout souory od inolty z Emailu v csv.</p>
+<p>Výpis je dále nutno přeuložit jako CSV UTF-8 (s oddělovači) (*.csv).</p>
+<p>Tisk uložit jako print.csv a nájem jako rental.csv.</p>
+<p>Soubor uložte do složky telsor na sw02660 v c:inetpub\wwwroot\telsor\import .</p>
+<p>(Zkontrolutje zda do složky máte přístup přes průzkumník souborů).</p>
+<hr />
+@using (Html.BeginForm("DoImport", "ImportPrinter"))
+{
+    <div class="form-group">
+        @Html.LabelFor(r => r.Month)
+        @Html.TextBoxFor(r => r.Month, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.Month)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.Year)
+        @Html.TextBoxFor(r => r.Year, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.Year)
+    </div>
+
+
+    <button name="submit" type="submit" class="btn btn-primary" id="submit" value="import">Import</button>
+    <button name="submit" type="submit" class="btn btn-default" id="delete" value="delete">Smazat data pro vybraný měsíc</button>
+
+}
+<hr />
+<h2>Nájemné</h2>
+<table id="rental" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Název</th>
+            <th>Sériové Číslo</th>
+            <th>Odpovědný člověk</th>
+            <th>Závod</th>
+            <th>Místnost</th>
+            <th>Nájem</th>
+            <th>Oddělení</th>
+            <th>Datum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.PrinterRecords)
+        {
+            <tr>
+                <td>@r.Name</td>
+                <td>@r.SerialNr</td>
+                <td>@r.ResponsiblePerson</td>
+                <td>@r.Factory</td>
+                <td>@r.Room</td>
+                <td>@r.RentalPrize</td>
+                <td>@r.Department.Name</td>
+                <td>@r.Month @r.Year</td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+<hr />
+<h2>Tisky</h2>
+<table id="prints" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Název</th>
+            <th>Sériové Číslo</th>
+            <th>Odpovědný člověk</th>
+            <th>Závod</th>
+            <th>Místnost</th>
+            <th>Černobílé tisky</th>
+            <th>Černobílé cena</th>
+            <th>Barevné tisky</th>
+            <th>Černobílé cena</th>
+            <th>Oddělení</th>
+            <th>Datum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.PrinterRecordPrints)
+        {
+            <tr>
+                <td>@r.Name</td>
+                <td>@r.SerialNr</td>
+                <td>@r.ResponsiblePerson</td>
+                <td>@r.Factory</td>
+                <td>@r.Room</td>
+                <td>@r.CountBw</td>
+                <td>@r.PrizeBw</td>
+                <td>@r.CountColor</td>
+                <td>@r.PrizeColor</td>
+                <td>@r.Department.Name</td>
+                <td>@r.Month @r.Year</td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+
+
+
+@section scripts{
+    <script>
+        $("#rental").DataTable();
+    </script>
+    <script>
+        $("#prints").DataTable();
+    </script>
+}

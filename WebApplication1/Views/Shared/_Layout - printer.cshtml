@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiskárny</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-red">
+        <div class="container">
+            <div class="navbar-header  justify-content-start">
+                
+                @Html.Partial("_LoginPartial")
+                @Html.ActionLink("Telefony", "Index", "Home", new { area = "" }, new { @class = "navbar-brand btn btn-primary margi" })
+                @Html.ActionLink("Tiskárny", "Index", "PrinterMaster", new { area = "" }, new { @class = "navbar-brand btn btn-primary margi" })
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Účtování", "Index", "PrinterAccounting", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Import", "Index", "ImportPrinter", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Kmenová data", "Index", "PrinterMaster", new { area = "" }, new { @class = "navbar-brand" })
+
+                }
+                else if (User.IsInRole("Accounting"))
+                {
+                    @Html.ActionLink("Účtování", "Index", "PrinterAccounting", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                else if (User.IsInRole("Manager"))
+                {
+
+                }
+                else
+                {
+                    <h3 class="text-center">Pro přístup kontaktujte lokální IT.</h3>
+
+                }
+                
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Tomáš Němec</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

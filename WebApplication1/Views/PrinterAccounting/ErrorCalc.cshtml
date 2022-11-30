@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "ErrorCalc";
+    Layout = "~/Views/Shared/_Layout - printer.cshtml";
+}
+
+<h2>Pozor!</h2>
+<p>Data za tento měsíc již byla účtována.</p>
+<p>Pro opětovné účtování je nejdříve nutné smazat předchozí data</p>
+
+@Html.ActionLink("Zpět na účtování", "Index", "PrinterAccounting", null, new { @class = "btn btn-primary" })
+

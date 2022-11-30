@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>TelSor</h1>
+    <p class="lead">Aplikace slouží ke zpracování a účtování dat pro mobilní telefony a tiskárny.</p>
+    <p>@Html.ActionLink("Tiskárny", "Index", "ImportPrinter", null, new { @class = "btn btn-primary btn-lg" })</p>
+
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Hlášení</h2>
+        <p>
+            Reporty pro vybrané oddělení na základě měsíčních dat od operátorů.
+            Každému manažerovi je přiřazeno oddělení.
+        </p>
+        <p>@Html.ActionLink("Reporty", "Index", "MasterData", null, new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Účtování</h2>
+        <p>Rozpis a správa dat od Operátorů. Pro přístup je nutno mít k dispozici účet s dostatečným oprávněním</p>
+        <p>@Html.ActionLink("Účtování", "Index", "Accounting", null, new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Kmenová data</h2>
+        <p>Sekce pro správu kmenových dat a uživatelů. Pro přístup je nutný účet administrátora.</p>
+        <p>@Html.ActionLink("Kmenová data", "Index", "MasterData", null, new { @class = "btn btn-default" })</p>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - TelSor</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top ">
+        <div class="container">
+            <div class="navbar-header  justify-content-start">
+                
+                @Html.Partial("_LoginPartial")
+                @Html.ActionLink("Telefony", "Index", "Home", new { area = "" }, new { @class = "navbar-brand btn btn-danger margi"})
+                @Html.ActionLink("Tiskárny", "Index", "PrinterMaster", new { area = "" }, new { @class = "navbar-brand btn btn-danger margi" })
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Domů", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Reporty", "Index", "Report", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Účtování", "Index", "Accounting", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Import", "Index", "Records", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Správa dat", "Index", "MasterData", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Logy", "Index", "Log", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                else if (User.IsInRole("Accounting"))
+                {
+                    @Html.ActionLink("Domů", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Účtování", "Index", "Accounting", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                else if (User.IsInRole("Manager"))
+                {
+                    @Html.ActionLink("Domů", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Reporty", "Index", "Report", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                else if (User.IsInRole("Asistent"))
+                {
+                    @Html.ActionLink("Domů", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Správa dat", "Index", "MasterData", new { area = "" }, new { @class = "navbar-brand" })
+                }
+                
+
+            </div>
+           
+
+
+        </div>
+    </div>
+   
+
+    <div class="container body-content">        
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Tomáš Němec</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

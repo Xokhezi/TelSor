@@ -1,0 +1,131 @@
+﻿@model WebApplication1.Models.AccountingPrinterViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout - printer.cshtml";
+}
+
+<h2>Vyúčtování</h2>
+@using (Html.BeginForm("Index", "PrinterAccounting"))
+{
+    <div class="form-group">
+        @Html.LabelFor(r => r.Month)
+        @Html.TextBoxFor(r => r.Month, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.Month)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.Year)
+        @Html.TextBoxFor(r => r.Year, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.Year)
+    </div>
+
+    <button name="submit" type="submit" class="btn btn-primary" id="refresh" value="refresh">Aktualizovat</button>
+    <button name="submit" type="submit" class="btn btn-default" id="calc" value="calc">Kalkulace</button>
+    <button name="submit" type="submit" class="btn btn-default" id="delete" value="delete">Smazat</button>
+
+    
+
+    <p>Funkce Aktualizovat vybere účtování pro zadaný měsíc.</p>
+    <p>Funkce Kalkulace zaúčtuje data pro zadaný měsíc.</p>
+    <p>Funkce Vymazat vymaže data pro zadaný měsíc.</p>
+
+
+
+}
+<hr />
+
+<table id="rental" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Oddělení</th>
+            <th>Oddělení č.</th>
+            <th>Cena</th>
+            <th>Datum</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.PrinterRecords)
+        {
+            <tr>
+                <td>@r.Department.Name</td>
+                <td>@r.Department.DepNumber</td>
+                <td>@r.Price</td>
+                <td>@r.Year @r.Month</td>
+
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Nájem celkem bez DPH</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.Rental</td>
+        </tr>
+    </tbody>
+</table>
+<hr />
+<table id="prints" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Oddělení</th>
+            <th>Oddělení č.</th>
+            <th>Tisky černobílá</th>
+            <th>Tisky barevná</th>
+            <th>Cena černobílé</th>
+            <th>Cena barevné</th>
+            <th>Datum</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.PrinterRecordPrints)
+        {
+            <tr>
+                <td>@r.Department.Name</td>
+                <td>@r.Department.DepNumber</td>
+                <td>@r.CountBw</td>
+                <td>@r.CountColor</td>
+                <td>@r.PriceBw</td>
+                <td>@r.PriceColor</td>
+                <td>@r.Year @r.Month</td>
+
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Černobílé celkem bez DPH</th>
+            <th>Barevné celkem bez DPH</th>
+            <th>Celkem bez DPH</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.PrizeBw</td>
+            <td>@Model.PrizeColor</td>
+            <td>@Model.PrintsSummary</td>
+
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+@section scripts{
+    <script>
+        $("#rental").DataTable();
+        $("#prints").DataTable();
+    </script>
+}

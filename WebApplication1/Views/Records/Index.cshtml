@@ -1,0 +1,91 @@
+﻿@model WebApplication1.Models.ImportViewModel
+@{
+    ViewBag.Title = "Import";
+}
+<body onload="loading()" style="margin:0;">
+    <div id="loader"></div>
+    <div style="display:none;" id="div" class="animate-bottom">
+        <h2>Import dat</h2>
+        <p>Před importem je nutno stáhnout podrobný výpis v csv z moje O2.</p>
+        <p>Výpis je dále nutno přeuložit jako CSV UTF-8 (s oddělovači) (*.csv).</p>
+        <p>Soubor uložte do složky telsor na sw02660 v c:inetpub\wwwroot\telsor\import .</p>
+        <p>(Zkontrolutje zda do složky máte přístup přes průzkumník souborů).</p>
+        <hr />
+        <table id="import" class="table table-bordered table-hover" width="100%">
+            <thead>
+                <tr>
+                    <th>Číslo</th>
+                    <th>Jméno</th>
+                    <th>Cena bez Dph</th>
+                    <th>Cena s Dph</th>
+                    <th>Oddělení</th>
+                    <th>Datum</th>
+                    <th>Hovory</th>
+                    <th>Sms</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var r in Model.Records)
+                {
+                <tr>
+                    <td>@r.Number</td>
+                    <td>@r.Name</td>
+                    <td>@r.Price</td>
+                    <td>@r.PriceWithDph</td>
+                    <td>@r.Department.Name</td>
+                    <td>@r.DateOf</td>
+                    <td>@r.Calls</td>
+                    <td>@r.Msgs</td>
+                    <td>@r.Data</td>
+                </tr>
+                }
+
+
+
+
+
+            </tbody>
+        </table>
+        @Html.ActionLink("Import", "DoImport", "Records", null, new { @class = "btn btn-primary" })
+        <hr />
+        <h2>Refresh tabulky</h2>
+        @using (Html.BeginForm("Index", "Records"))
+        {
+            <div class="form-group">
+                @Html.LabelFor(r => r.Month)
+                @Html.TextBoxFor(r => r.Month, new { @class = "form-control" })
+                @Html.ValidationMessageFor(r => r.Month)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(r => r.Year)
+                @Html.TextBoxFor(r => r.Year, new { @class = "form-control" })
+                @Html.ValidationMessageFor(r => r.Year)
+            </div>
+
+
+            <button name="submit" type="submit" class="btn btn-primary" id="submit" value="refresh">Aktualizovat</button>
+            <button name="submit" type="submit" class="btn btn-default" id="delete" value="delete">Smazat data pro vybraný měsíc</button>
+
+        }
+        <hr />
+    </div>
+        @section scripts{
+            <script>
+                $("#import").DataTable();
+            </script>
+            <script>
+                var timer;
+
+                function loading() {
+                    timer = setTimeout(showPage, 750);
+                }
+
+                function showPage() {
+                    document.getElementById("loader").style.display = "none";
+                    document.getElementById("div").style.display = "inline";
+                }
+            </script>
+        }
+</body>

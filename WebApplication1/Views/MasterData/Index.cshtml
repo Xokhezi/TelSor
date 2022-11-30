@@ -1,0 +1,37 @@
+﻿@model WebApplication1.Models.NumberMasterDataViewModel
+@{
+    ViewBag.Title = "Evidence čísel";
+}
+
+<h2>Kmenová data</h2>
+<table id="masterData" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Číslo</th>
+            <th>Jméno</th>
+            <th>Oddělení</th>
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model.Records)
+        {
+        <tr>
+            <td><a href='/telsor/masterdata/detail/@r.Id'>@r.Number</a></td>
+            <td>@r.Name</td>
+            <td>@r.Department.Name</td>
+            <td><a class="btn btn-default" href='/telsor/masterdata/DeleteMasterData/@r.Id'>Smazat</a></td>
+        </tr>
+
+        }
+
+    </tbody>
+</table>
+@Html.ActionLink("Nový záznam", "New", "MasterData", null, new { @class = "btn btn-primary" })
+
+@section scripts{
+    <script>
+        $("#masterData").DataTable();
+    </script>
+    }

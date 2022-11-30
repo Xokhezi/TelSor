@@ -1,0 +1,22 @@
+﻿
+@model WebApplication1.Models.UsersControlViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Přiřadit práva</h2>
+
+<div class="form-group">
+    @Html.LabelFor(r => r.Users)
+    @Html.DropDownListFor(r => r.User.Id, new SelectList(Model.Users, "Id", "UserName"), "Uživatel", new { @class = "form-control" })
+    @Html.ValidationMessageFor(r => r.User.Id)
+
+</div>
+
+
+
+
+<div>
+    @Html.ActionLink("Zpět", "Index", "Manage")
+</div>

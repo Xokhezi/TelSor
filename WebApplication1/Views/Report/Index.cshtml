@@ -1,0 +1,46 @@
+﻿@model WebApplication1.Models.ReportViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Report</h2>
+
+<table id="deps" class="table table-bordered table-hover" width="100%">
+    <thead>
+        <tr>
+            <th>Jméno</th>
+            <th>Číslo</th>
+            <th>Cena</th>
+            <th>Cena s Dph</th>
+            <th>Datum</th>
+            <th>Hovory</th>
+            <th>Sms</th>
+            <th>Data</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var r in Model.Records)
+        {
+        <tr>
+            <td>@r.Name</td>
+            <td>@r.Number</td>
+            <td>@r.Price</td>
+            <td>@r.PriceWithDph</td>
+            <td>@r.DateOf.ToShortDateString()</td>
+            <td>@r.Calls</td>
+            <td>@r.Msgs</td>
+            <td>@r.Data</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts{
+    <script>
+        $("#deps").DataTable();
+    </script>
+
+}
+

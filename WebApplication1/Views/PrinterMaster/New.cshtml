@@ -1,0 +1,45 @@
+﻿@model WebApplication1.Models.NewPrinterViewModel
+@{
+    ViewBag.Title = "New";
+    Layout = "~/Views/Shared/_Layout - printer.cshtml";
+}
+
+<h2>Nový záznam</h2>
+@using (Html.BeginForm("Save", "PrinterMaster"))
+{
+    <div class="form-group">
+        @Html.LabelFor(r => r.PrinterMaster.Name)
+        @Html.TextBoxFor(r => r.PrinterMaster.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.PrinterMaster.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.PrinterMaster.SerialNr)
+        @Html.TextBoxFor(r => r.PrinterMaster.SerialNr, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.PrinterMaster.SerialNr)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.PrinterMaster.ResponsiblePerson)
+        @Html.TextBoxFor(r => r.PrinterMaster.ResponsiblePerson, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.PrinterMaster.ResponsiblePerson)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.PrinterMaster.Factory)
+        @Html.TextBoxFor(r => r.PrinterMaster.Factory, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.PrinterMaster.Factory)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.PrinterMaster.Room)
+        @Html.TextBoxFor(r => r.PrinterMaster.Room, new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.PrinterMaster.Room)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(r => r.PrinterMaster.DepartmentId)
+        @Html.DropDownListFor(r => r.PrinterMaster.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Oddělení", new { @class = "form-control" })
+        @Html.ValidationMessageFor(r => r.PrinterMaster.DepartmentId)
+    </div>
+
+    @Html.HiddenFor(r => r.PrinterMaster.Id)
+
+    <button type="submit" class="btn btn-primary">Uložit</button>
+}
+
